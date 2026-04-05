@@ -10,9 +10,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-ENV PYTHONPATH=/app
+# Force PYTHONPATH via .pth file — guaranteed to work
+RUN echo "/app" > /usr/local/lib/python3.8/site-packages/hostalgrid.pth
+
 ENV API_BASE_URL="https://api.openai.com/v1"
 ENV MODEL_NAME="gpt-4o-mini"
 ENV HF_TOKEN=""
 
-CMD ["python", "-m", "inference"]
+CMD ["python", "inference.py"]
