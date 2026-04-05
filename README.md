@@ -1,3 +1,13 @@
+---
+title: HostelGrid++
+emoji: 🏨
+colorFrom: green
+colorTo: blue
+sdk: docker
+pinned: false
+license: mit
+---
+
 # 🏨 HostelGrid++ — Human-Aware Energy Optimization Environment
 
 > **An AI agent that manages hostel energy under constraints of cost, carbon, fairness, and human complaints.**
