@@ -815,15 +815,19 @@ name = "hostalgrid-plus-plus"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "fastapi" },
     { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "numpy", version = "2.4.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "openenv-core" },
+    { name = "uvicorn" },
 ]
 
 [package.metadata]
 requires-dist = [
+    { name = "fastapi", specifier = ">=0.100.0" },
     { name = "numpy", specifier = ">=1.21.0" },
     { name = "openenv-core", specifier = ">=0.2.0" },
+    { name = "uvicorn", specifier = ">=0.20.0" },
 ]
 
 [[package]]
