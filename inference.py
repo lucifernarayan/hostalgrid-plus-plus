@@ -3,7 +3,6 @@
 # Uses OpenAI client with [START][STEP][END] structured logging
 
 import os
-import json
 import random
 import time
 from openai import OpenAI
@@ -69,11 +68,7 @@ def run_task(task_id: str) -> float:
     obs = env.reset()
 
     # ── [START] log ───────────────────────────────────────────
-    print(json.dumps({
-        "event":   "START",
-        "task_id": task_id,
-        "obs": obs.model_dump(),
-    }))
+    print(f"[START] task={task_id}", flush=True)
 
     done  = False
     step  = 0
@@ -90,70 +85,39 @@ def run_task(task_id: str) -> float:
         next_obs, reward, done, info = env.step(action)
 
         # ── [STEP] log ────────────────────────────────────────
-        print(json.dumps({
-            "event":     "STEP",
-            "task_id":   task_id,
-            "step":      step,
-            "action":    action_id,
-            "reward":    reward.value,
-            "done":      done,
-            "power":     info.get("power", 0),
-            "complaints": info.get("complaints", 0),
-            "cost":      info.get("cost", 0),
-        }))
+        print(f"[STEP] step={step} reward={reward.value:.4f}", flush=True)
 
         obs = next_obs
 
     score = env.score()
 
     # ── [END] log ─────────────────────────────────────────────
-    print(json.dumps({
-        "event":        "END",
-        "task_id":      task_id,
-        "score":        score,
-        "total_reward": env._total_reward,
-        "total_cost":   env._total_cost,
-        "total_complaints": env._total_complaints,
-        "steps":        step,
-    }))
+    print(f"[END] task={task_id} score={score:.4f} steps={step}", flush=True)
 
     return score
 
 
 def main():
     """Run all 3 tasks and report final scores."""
-    print(json.dumps({
-        "event":   "START",
-        "task_id": "all",
-        "model":   MODEL_NAME,
-        "base_url": API_BASE_URL,
-    }))
 
     scores = {}
     for task_id in TASKS:
-        print(f"\n{'='*50}")
-        print(f"Running {task_id}...")
-        print(f"{'='*50}")
+        print(f"\n{'='*50}", flush=True)
+        print(f"Running {task_id}...", flush=True)
+        print(f"{'='*50}", flush=True)
         score = run_task(task_id)
         scores[task_id] = score
-        print(f"\n✅ {task_id} Score: {score:.4f}")
+        print(f"\n✅ {task_id} Score: {score:.4f}", flush=True)
         time.sleep(1)
 
     avg = sum(scores.values()) / len(scores)
 
-    print(json.dumps({
-        "event":      "END",
-        "task_id":    "all",
-        "scores":     scores,
-        "avg_score":  round(avg, 4),
-    }))
-
-    print(f"\n{'='*50}")
-    print(f"📊 Final Scores:")
+    print(f"\n{'='*50}", flush=True)
+    print(f"📊 Final Scores:", flush=True)
     for t, s in scores.items():
-        print(f"   {t}: {s:.4f}")
-    print(f"   Average: {avg:.4f}")
-    print(f"{'='*50}")
+        print(f"   {t}: {s:.4f}", flush=True)
+    print(f"   Average: {avg:.4f}", flush=True)
+    print(f"{'='*50}", flush=True)
 
 
 if __name__ == "__main__":
