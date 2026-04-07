@@ -701,7 +701,7 @@ DASHBOARD_HTML = """<!DOCTYPE html>
 
   <!-- FOOTER -->
   <footer class="fade-in d5">
-    <div>Built for <span style="color:var(--green)">Meta PyTorch × Scaler Hackathon</span> · by Anshu Tiwari</div>
+    <div>Built for <span style="color:var(--green)">Meta PyTorch × Scaler Hackathon</span> · by Team Raptor </div>
     <div class="footer-links">
       <a href="/docs">API Docs</a>
       <a href="/tasks">Tasks</a>
